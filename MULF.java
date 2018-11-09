@@ -36,7 +36,7 @@ public class MULF extends AbstractOpCode {
                         long temp = Long.parseLong(result.substring(0, i)+result.substring(i+1));
                         if(temp > Integer.MAX_VALUE || temp < Integer.MIN_VALUE){
                             System.out.println("Overflow during fixed point multiplication");
-                            return;
+                            g.terminate();
                         }
                         g.push(result.length()-(i+1));
                         g.push((int)temp);

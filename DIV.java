@@ -14,6 +14,10 @@ public class DIV extends AbstractOpCode {
 	public void opCode(GPVM g) {
             int temp = g.pop();
             int a = g.pop();
+            if(temp==0){
+                System.out.println("Cannot divide by 0");
+                g.terminate();
+            }
             long quot = a/temp;
             if(quot*temp!=a){
                 System.out.println("Overflow During Calculation Process Aborted");

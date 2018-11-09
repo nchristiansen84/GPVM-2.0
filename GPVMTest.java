@@ -16,6 +16,10 @@ public class GPVMTest {
 	 * Number of tests attempted
 	 */
 	static int numRan= 0;
+	/**
+	 * Number of tests the user has to confirm passed
+	 */
+	static int numUserChecked=0;
 	/*
 	 * Instantiates a GPVM for the tests
 	 */
@@ -46,6 +50,7 @@ public class GPVMTest {
 		}
                 else if(act.equals("User must check")){
                     System.out.println("User must check.");
+                    numUserChecked++;
                 }
 		else{
 			System.out.println("FAILED.");
@@ -1061,7 +1066,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("addf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test66, "0", "35d", "Testing addf positive overflow.", "-1"); 
+		runTest(test66, "0", "35d", "Testing addf positive overflow.", "-3"); 
                 
                 int[] test67= {	
 				gPVM.getOpCode("ldc"),	
@@ -1087,7 +1092,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("addf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test67, "0", "35e", "Testing addf negative overflow.", "-1"); 
+		runTest(test67, "0", "35e", "Testing addf negative overflow.", "-3"); 
                 
                 // Need to see stack and dspace for these tests
                 gPVM.showStack(true);
@@ -1199,7 +1204,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("subf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test71, "0", "36d", "Testing subf positive overflow.", "-1"); 
+		runTest(test71, "0", "36d", "Testing subf positive overflow.", "-3"); 
                 
                 int[] test72= {	
 				gPVM.getOpCode("ldc"),	
@@ -1225,7 +1230,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("subf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test72, "0", "36e", "Testing subf negative overflow.", "-1"); 
+		runTest(test72, "0", "36e", "Testing subf negative overflow.", "-3"); 
                 
                 // Need to see stack and dspace for these tests
                 gPVM.showStack(true);
@@ -1337,7 +1342,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("mulf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test76, "0", "37d", "Testing mulf positive overflow.", "-1"); 
+		runTest(test76, "0", "37d", "Testing mulf positive overflow.", "-3"); 
                 
                 int[] test77= {	
 				gPVM.getOpCode("ldc"),	
@@ -1363,7 +1368,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("mulf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test77, "0", "37e", "Testing mulf negative overflow.", "-1"); 
+		runTest(test77, "0", "37e", "Testing mulf negative overflow.", "-3"); 
                 
                 // Need to see stack and dspace for these tests
                 gPVM.showStack(true);
@@ -1475,7 +1480,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("divf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test81, "0", "38d", "Testing divf positive overflow.", "-1"); 
+		runTest(test81, "0", "38d", "Testing divf positive overflow.", "-3"); 
                 
                 int[] test82= {	
 				gPVM.getOpCode("ldc"),	
@@ -1501,7 +1506,7 @@ public class GPVMTest {
                                 gPVM.getOpCode("divf"),
 				gPVM.getOpCode("hlt"),	
 			};
-		runTest(test82, "0", "38e", "Testing divf negative overflow.", "-1"); 
+		runTest(test82, "0", "38e", "Testing divf negative overflow.", "-3"); 
                 
                 int[] test83= {	
 				gPVM.getOpCode("ldc"),	
@@ -1628,7 +1633,7 @@ public class GPVMTest {
 		runTest(test91, "-10", "41b", "Testing sin with input as -10", "0"); 
                 
 		System.out.println("++++++++++++++++++++++++++++++++++++");
-		System.out.println("Tests run: "+numRan+". Tests passed: "+numPassed+". ");
+		System.out.println("Tests run: "+numRan+". Tests passed: "+numPassed+". Tests user must check: "+numUserChecked+".");
 		System.out.println("++++++++++++++++++++++++++++++++++++");
 	}
 

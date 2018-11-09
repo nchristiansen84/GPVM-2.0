@@ -25,10 +25,14 @@ public class F2S extends AbstractOpCode{
          * Functor to execute the conversion of fixed point to string.
          */
 	public void opCode(GPVM g) {
-                String temp = g.getDSpace(g.getAcc());
-                int temp2 = temp.length()-Integer.parseInt(g.getDSpace(g.getAcc()+1));
-                g.setDSpace(g.getAcc(), temp.substring(0, temp2)+"."+
-                        temp.substring(temp2));
+                int temp = Integer.parseInt(g.getDSpace(g.getAcc()));
+                int temp2 = Integer.parseInt(g.getDSpace(g.getAcc()+1));
+                g.setDSpace(g.getAcc(), convert(temp, temp2)+"");
                 g.setDSpace(g.getAcc()+1, 0+"");
 	}
+        private double convert(double base, int pow){
+            if(pow>=0) for(int i=0; i<pow; i++) base/=10;
+            else for(int i=0; i<pow*-1; i++) base*=10;
+            return Double.parseDouble(base+"");
+        }
 }

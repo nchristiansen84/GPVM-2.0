@@ -23,7 +23,8 @@ public class STF extends AbstractOpCode{
          * Functor to execute the store fixed point.
          */
 	public void opCode(GPVM g) {
-                g.setDSpace(g.getOperand(), g.pop()+"");
-                g.setDSpace(g.getOperand()+1, g.pop()+"");
+                int temp = g.getOperand();
+                g.setDSpace(temp, g.pop()+"");
+                g.setDSpace(temp+1, g.pop()+"");
 	}
 }
