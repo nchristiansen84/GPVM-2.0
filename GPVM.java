@@ -40,6 +40,21 @@ public class GPVM {
 	 *  the array containing the int[] stack to hold data for the VM.
 	 */
 	private int[] stack;
+	/**
+	 * ---Added---
+	 *  the array containing the String[] dspace to hold data for the VM during runtime.
+	 */
+	private String[] dspace;
+		/**
+		 * ---Added---
+		 *  used to contain the results of an arithmetical or logical operation
+		 */
+		private int accumulator;
+		/**
+		 * ---Added---
+		 *  used to contain a String from the dspace or from input
+		 */
+		private String stringHolder;
 	
 	/**
 	 * the current opcode being processed.
@@ -56,6 +71,11 @@ public class GPVM {
 	 * Checked to determine if the stack should be displayed after a run. Defaults to display.
 	 */
 	private boolean showStack = true;
+
+	/**
+	 * Checked to determine if the dspace should be displayed after a run. Defaults to display.
+	 */
+	private boolean showDSpace = true;
 	
 	boolean done = false;
 	
@@ -137,6 +157,32 @@ public class GPVM {
 		System.out.println();
 		System.out.println("})");
 	}
+	/**
+	 * allows or disallows the display of the dspace at the end of each run.
+	 * @param b true if the instruction set should be show, false if not.
+	 */
+	public void showDSpace(boolean b){
+		showDSpace = b;
+	}
+	/**
+	 * Debug utility to display the contact of the dspace.
+	 */
+	private void showDSpace(){
+		System.out.println("(DSAPCE, {");
+		int counter = 0;
+		for (String x : dspace){
+			if(counter<15){
+				System.out.print("("+x+")");
+			}
+			else{
+				counter = 0;
+				System.out.println("("+x+")");
+			}
+			counter++;
+		}
+		System.out.println();
+		System.out.println("})");
+	}
 
 	/**
 	 * <p>pushes the data parameter onto the programSpace stack.</p>
@@ -146,7 +192,7 @@ public class GPVM {
 	 */
 	public synchronized void push(int data){
 		sp--;
-	
+
 		if(sp<0){
 			sp=stack.length-1;
 		}
@@ -240,6 +286,55 @@ public class GPVM {
 		 pc=programSpace[firstOperand]%programSpace.length;
 	}
 	/**
+	 * ---Added---
+	 * Sets the Accumulator to the value passed
+	 */
+	public synchronized void setAcc(int acc){
+		 accumulator=acc;
+	}
+	/**
+	 * ---Added---
+	 * Returns the value in the accumulator
+	 */
+	public synchronized int getAcc(){
+		 return accumulator;
+	}
+	/**
+	 * ---Added---
+	 * Returns the value in the stringHolder
+	 */
+	public synchronized String getSH(){
+		 return stringHolder;
+	}
+	/**
+	 * ---Added---
+	 * Sets the value to the stringHolder
+	 */
+	public synchronized void setSH(String sh){
+		 stringHolder=sh;
+	}
+	/**
+	 * ---Added---
+	 * Returns the value of the stack pointer
+	 */
+	public synchronized int getSP(){
+		 return sp;
+	}
+	/**
+	 * ---Added---
+	 * Returns the value in the dspace at the accumulator
+	 */
+	public synchronized String getDSpace(int add){
+		 return dspace[add];
+	}
+	/**
+	 * ---Added---
+	 * Sets the dspace at the accumulator 
+	 */
+	public synchronized void setDSpace(int add, String val){
+		 dspace[add]=val;
+	}
+	/**
 	 * Sets the PC with the address popped from the stack, but first it modifies the data by performing 
 	 * data%programSpace.length to ensure the resulting value
 	 * lies within the program stack.
@@ -247,18 +342,22 @@ public class GPVM {
 	public synchronized void popPC(){
 		pc=pop()%programSpace.length;
 	}
+
 	/**
 	 * 
 	 * @param p int[] of executable object code
 	 * @param n stack size for programSpace.
+	 * @param d size for dspace
 	 * @return The value on top of the stack.
 	 */
-	
-	public int calculate(int[] p, int[] n, long maxExecute){
+	public String calculate(int[] p, int[] n, String[] d, long maxExecute){
 		programSpace=p;
 		stack = n;
 		sp  = 0;
 		pc = 0;
+		dspace = d;
+		for(int i=0; i<dspace.length; i++) dspace[i]="0";
+		accumulator = 0;
 		
 		if(showInstructionSet){
 			showInstSet();
@@ -277,7 +376,7 @@ public class GPVM {
 			}
 			else{
 //				System.out.println("Unrecognized opcode: "+current);
-				return -1;
+				return -1+"";
 			}
 			
 		}
@@ -286,9 +385,11 @@ public class GPVM {
 		if(showStack){
 			showStack();
 		}
+		if(showDSpace){
+			showDSpace();
+		}
 		
-		return (stack[sp]);
-
+		return (stack[sp])+"";
 	}
 
 }
