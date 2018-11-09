@@ -1,0 +1,13 @@
+ldc
+263569
+st
+0
+ldc
+2
+st
+1
+ldc
+0
+f2s
+sout
+hlt

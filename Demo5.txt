@@ -1,0 +1,12 @@
+ldc
+-60234
+st
+0
+ldc
+3
+st
+1
+ldf
+0
+negf
+hlt

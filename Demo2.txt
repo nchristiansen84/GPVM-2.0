@@ -1,0 +1,9 @@
+psh
+x:400
+psh
+x
+add
+psh
+8
+div
+hlt
