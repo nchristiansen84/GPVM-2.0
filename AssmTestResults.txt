@@ -1,0 +1,275 @@
+run:
+Test ID: 01
+psh
+100
+psh
+10
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(10)(110)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 110 Actual: 110 Result: PASSED
+ 
+Test ID: 02
+dpsh
+1000
+10000
+sub
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(10000)(-9000)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: -9000 Actual: -9000 Result: PASSED
+ 
+Test ID: 03
+dpsh
+0
+13
+div
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(13)(0)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 0 Actual: 0 Result: PASSED
+ 
+Test ID: 04
+tokens[0] = "One", and tokens[1]=" 1.
+Added ("One", 1)
+tokens[0] = "Two", and tokens[1]=" 2.
+Added ("Two", 3)
+psh
+1
+psh
+2
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(2)(3)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 3 Actual: 3 Result: PASSED
+ 
+Test ID: 05
+psh
+5
+psh
+10
+mul
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(10)(50)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 50 Actual: 50 Result: PASSED
+ 
+Test ID: 06
+psh
+21
+neg
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(-21)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: -21 Actual: -21 Result: PASSED
+ 
+Test ID: 07
+psh
+22
+psh
+3
+mod
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(3)(1)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 1 Actual: 1 Result: PASSED
+ 
+Test ID: 08
+dpsh
+10
+1
+pop
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(1)(10)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 10 Actual: 10 Result: PASSED
+ 
+Test ID: 09
+psh
+-14551
+sgn
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(-1)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: -1 Actual: -1 Result: PASSED
+ 
+Test ID: 10
+tokens[0] = "ONE", and tokens[1]="1.
+Added ("ONE", 1)
+dpsh
+1
+ONE
+add
+hlt
+Looking for "ONE" in the symtab
+Checking against symtab: ONE
+Returning 0 from findSymbol
+bang
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(1)(2)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 2 Actual: 2 Result: PASSED
+ 
+Test ID: 11
+dpsh
+1
+20
+dpsh
+1
+80
+divf
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(80)(1)(40)(1)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 40 Actual: 40 Result: PASSED
+ 
+Test ID: 12
+dpsh
+0
+0
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 0 Actual: 0 Result: PASSED
+ 
+Test ID: 13
+dpsh
+100
+-100
+sub
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(-100)(200)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 200 Actual: 200 Result: PASSED
+ 
+Test ID: 14
+dpsh
+1
+-2147483646
+sub
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(-2147483646)(2147483647)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 2147483647 Actual: 2147483647 Result: PASSED
+ 
+Test ID: 15
+dpsh
+0
+-2147483648
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(-2147483648)(-2147483648)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: -2147483648 Actual: -2147483648 Result: PASSED
+ 
+Test ID: 16
+dpsh
+1
+1073741823
+psh
+2
+mul
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(2)(2147483646)(2147483647)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 2147483647 Actual: 2147483647 Result: PASSED
+ 
+Test ID: 17
+dpsh
+1
+1
+dpsh
+1
+1
+dpsh
+4
+5
+dpsh
+2
+9
+dpsh
+0
+9
+dpsh
+8
+7
+hlt
+(STACK, {
+(9)(0)(9)(2)(5)(4)(1)(1)(7)(8)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 7 Actual: 7 Result: PASSED
+ 
+---------------------------------------------------
+Tests Run: 17 Tests Passed: 17
+---------------------------------------------------
+BUILD SUCCESSFUL (total time: 0 seconds)

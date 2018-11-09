@@ -1,0 +1,125 @@
+run:
+-----Test ID: 01 Title: Subtraction -----
+psh
+100
+psh
+80
+sub
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(80)(20)
+})
+(DSAPCE, {
+
+})
+ Expected: 20. Actual: 20. Result: PASSED.
+----------
+-----Test ID: 02 Title: Addition -----
+psh
+100
+psh
+80
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(80)(180)
+})
+(DSAPCE, {
+
+})
+ Expected: 180. Actual: 180. Result: PASSED.
+----------
+-----Test ID: 03 Title: Multiplication -----
+psh
+100
+psh
+80
+mul
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(80)(8000)
+})
+(DSAPCE, {
+
+})
+ Expected: 8000. Actual: 8000. Result: PASSED.
+----------
+-----Test ID: 04 Title: NegativeAddition -----
+psh
+100
+psh
+-80
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(-80)(20)
+})
+(DSAPCE, {
+
+})
+ Expected: 20. Actual: 20. Result: PASSED.
+----------
+-----Test ID: 05 Title: Subtraction -----
+psh
+100
+psh
+80
+sub
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(80)(20)
+})
+(DSAPCE, {
+
+})
+ Expected: 20. Actual: 20. Result: PASSED.
+----------
+-----Test ID: 06 Title: Addition -----
+psh
+100
+psh
+80
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(80)(180)
+})
+(DSAPCE, {
+
+})
+ Expected: 180. Actual: 180. Result: PASSED.
+----------
+-----Test ID: 07 Title: Multiplication -----
+psh
+100
+psh
+80
+mul
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(80)(8000)
+})
+(DSAPCE, {
+
+})
+ Expected: 8000. Actual: 8000. Result: PASSED.
+----------
+-----Test ID: 08 Title: NegativeAddition -----
+psh
+100
+psh
+-80
+add
+hlt
+(STACK, {
+(0)(0)(0)(0)(0)(0)(0)(0)(-80)(20)
+})
+(DSAPCE, {
+
+})
+ Expected: 20. Actual: 20. Result: PASSED.
+----------
+++++++++++++++++++++++++++++++++++++
+Tests run: 8. Tests passed: 8. 
+++++++++++++++++++++++++++++++++++++
+BUILD SUCCESSFUL (total time: 0 seconds)

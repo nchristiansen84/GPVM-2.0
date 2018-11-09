@@ -1,4 +1,4 @@
-package jjp.gpvm;
+package gpvm;
 /**
  * A class to support an opcode representing: 
  * pop the top two items from the stack, add the first 
@@ -22,7 +22,14 @@ public class ADD extends AbstractOpCode {
  * Functor to execute the add.
  */
 	public void opCode(GPVM g) {
-		g.push(g.pop()+g.pop());
+            int a = g.pop();
+            int b = g.pop();
+            long sum = a+b;
+            if(sum-a!=b){
+                System.out.println("Overflow During Calculation Process Aborted");
+                System.exit(0);
+            }
+            else g.push((int)sum);
 	}
 
 }

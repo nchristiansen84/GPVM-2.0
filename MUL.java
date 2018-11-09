@@ -1,4 +1,4 @@
-package jjp.gpvm;
+package gpvm;
 /**
  * Opcode representing pop the top two items in the stack, multiple them and push the result:  tempA = stack[sp]; tempB = stack[sp+1]; stack[sp++] = tempA *tempB;
  */
@@ -11,7 +11,14 @@ public class MUL extends AbstractOpCode {
 
 	@Override
 	public void opCode(GPVM g) {
-		g.push(g.pop()*g.pop());
+            int a = g.pop();
+            int b = g.pop();
+            long prod = a*b;
+            if(a!=0&&prod/a!=b){
+                System.out.println("Overflow During Calculation Process Aborted");
+                System.exit(0);
+            }
+            else g.push((int)prod);
 
 	}
 

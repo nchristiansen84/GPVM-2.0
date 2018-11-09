@@ -1,0 +1,34 @@
+*Test output from AssmLabelTest
+
+
+run:
+
+**Input: thisisareallylonglabel:10 psh 1 hlt
+
+Test ID: 1
+Invalid Label. Assembly aborted.
+BUILD SUCCESSFUL (total time: 0 seconds)
+
+**Input: thislabelis15ch:1 psh 1 hlt
+
+Test ID: 2
+tokens[0] = "Thislabelis15ch", and tokens[1]="1.
+Added ("Thislabelis15ch", 0)
+1
+psh
+1
+hlt
+(STACK, {
+(0)(1)(0)(1)(0)(0)(0)(0)(0)(0)
+})
+(DSAPCE, {
+(0)(0)(0)(0)(0)(0)(0)(0)(0)(0)
+})
+Expected: 1 Actual: 1 Result: PASSED 
+BUILD SUCCESSFUL (total time: 0 seconds)
+
+**Input: 4:1 psh 1 hlt
+
+Test ID: 3
+Invalid Label. Assembly aborted.
+BUILD SUCCESSFUL (total time: 0 seconds)
