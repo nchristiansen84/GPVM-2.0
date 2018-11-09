@@ -17,6 +17,7 @@ public class GPVMAssm {
 	int[] objArray;
 	ArrayList<SymbolTableEntry> symtab;
 	ArrayList<String>labellessSource;
+        ArrayList<Integer> objAL;
 	/**
 	 * Create an assembler for the GPVM
 	 */
@@ -77,8 +78,8 @@ public class GPVMAssm {
 		ArrayList<String> al = new ArrayList<String>();
 		String[] source = new String[1];
 		try{	
-			//in = new FileInputStream(file);
-			in = new FileInputStream("./test");
+			in = new FileInputStream(file);
+			//in = new FileInputStream("./test");
 		}
 		catch (IOException ioe){
 			System.out.println("ERROR:  reading the saved file.");    
@@ -196,7 +197,7 @@ public class GPVMAssm {
 		String[] tokens;
 		int lineNum=0;
 		for (String s : source){
-			System.out.println("Line number:"+lineNum+",  String:"+s);
+			//System.out.println("Line number:"+lineNum+",  String:"+s);
 			tokens = s.trim().split(":");
 			if (tokens == null)			{
 				System.out.println("ASSM PASS 1:  Blank lines are not permitted. Assembly aborted.");
@@ -207,7 +208,7 @@ public class GPVMAssm {
 				System.exit(0);
 			}
 			else if (tokens.length==1){
-				System.out.println("One token; tokens[0] = \""+tokens[0]+"\"");
+				//System.out.println("One token; tokens[0] = \""+tokens[0]+"\"");
 				this.invalidTokenCheck(tokens[0], lineNum, s);
 				labellessSource.add(tokens[0].trim());
 				//no pass one work, because labels are not permitted on blank lines.
@@ -235,23 +236,32 @@ public class GPVMAssm {
 
 		String[] source = new String[labellessSource.size()];
 		labellessSource.toArray(source);
-		objArray = new int[source.length];
+                objAL = new ArrayList<Integer>();
+		
 		for(int x = 0; x<source.length; x++){
-			System.out.println("Processing line "+x+": "+"source: "+source[x]+".");
-			int temp =gPVM.getOpCode(source[x]);
+			//System.out.println("Processing line "+x+": "+"source: "+source[x]+".");
+                        String temps=source[x];
+                        String tempArg=null;
+                        
+                        if (source[x].trim().contains(" ")){ //there is an argument(s)
+                                temps=source[x].substring(0,source[x].indexOf(" "));
+                                tempArg=source[x].substring(source[x].indexOf(" "));
+                        }
+                        
+			int temp =gPVM.getOpCode(temps);
+                                                                      
 			if (temp>=0){
-				objArray[x] = temp;
+				objAL.add(temp);
 			}
-			else {
-				//need code to handle opCodes with arguments.
+                                           
+                        else {        
 				try{
-
-					objArray[x]=Integer.parseInt(source[x]);
+					objAL.add(Integer.parseInt(temps));
 				}
 				catch(NumberFormatException e){
-					temp = findSymbol(source[x]);
+					temp = findSymbol(temps);
 					if (temp>=0){
-						objArray[x] = symtab.get(temp).line;
+						objAL.add(symtab.get(temp).line);
 						System.out.println("bang");
 					}
 					else{
@@ -260,8 +270,53 @@ public class GPVMAssm {
 					}
 				}
 			}
+                        if (tempArg!=null){
+                            if(tempArg.trim().contains(" ")){ //multiple arguments
+                                while(tempArg.trim().contains(" ")){
+                                    String arg = tempArg.substring(0,tempArg.indexOf(" "));
+                                    tempArg = tempArg.substring(tempArg.indexOf(" "));
+                                    try{
+                                        objAL.add(Integer.parseInt(arg));
+                                    }
+                                    catch(NumberFormatException e){
+                                        temp = findSymbol(arg);
+                                        if (temp>=0){
+                                            objAL.add(symtab.get(temp).line);
+                                            System.out.println("bang");
+                                        }
+                                        else{
+                                            System.out.println("ASSM PASS 2: Line number "+x+" contains a invalid opCode.  Assembly Aborted.");
+                                            System.exit(0);
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                try{
+                                    objAL.add(Integer.parseInt(tempArg));
+				}
+                                catch(NumberFormatException e){
+                                    temp = findSymbol(tempArg);
+                                    if (temp>=0){
+                                        objAL.add(symtab.get(temp).line);
+                                        System.out.println("bang");
+                                    }
+                                    else{
+                                        System.out.println("ASSM PASS 2: Line number "+x+" contains a invalid opCode.  Assembly Aborted.");
+                                        System.exit(0);
+                                    }
+                                }
+                            }
+                        }
 		}
-		return objArray;
+                
+                objArray = new int[objAL.size()];
+                //convert ArrayList to array
+                for(int x=0; x<objAL.size(); x++){
+                    objArray[x]=objAL.get(x);
+                }
+                
+                return objArray;
 	}
 	
 }
