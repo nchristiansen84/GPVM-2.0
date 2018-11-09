@@ -1,4 +1,5 @@
 package jjp.gpvm;
+
 /**
 * Opcode SIN takes in a string of input and store 
 * it in the dspace at the value of the accumulator. 
@@ -19,6 +20,8 @@ public class SIN extends AbstractOpCode{
          * Functor to execute the input.
          */
 	public void opCode(GPVM g) {
-                g.setDSpace(g.getAcc(), System.console().readLine("?> "));
+                System.out.print("?> ");
+                g.setDSpace(g.getAcc(), new java.util.Scanner(System.in).nextLine());
+                //g.setDSpace(g.getAcc(), System.console().readLine("?> "));
 	}
 }

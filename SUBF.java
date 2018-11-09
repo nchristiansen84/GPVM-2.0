@@ -25,19 +25,28 @@ public class SUBF extends AbstractOpCode {
          * Functor to execute the sub fixed point.
          */ 
 	public void opCode(GPVM g) {
-                String tempA1 = g.pop()+""; int tempA2 = g.pop();
-                String tempB1 = g.pop()+""; int tempB2 = g.pop();
-                long leftOfDecimal = Integer.parseInt(tempA1.substring(0, tempA2))-
-                        Integer.parseInt(tempB1.substring(0, tempB2));
-                long rightOfDecimal = Integer.parseInt(tempA1.substring(tempA2))-
-                        Integer.parseInt(tempB1.substring(tempB2));
-                long result = Long.parseLong(leftOfDecimal+""+rightOfDecimal);
-                if(result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) 
-                    System.out.println("Overflow during fixed point subtraction");
-                else {
-                    if(tempA2>=tempB2) g.push(tempA2);
-                    else g.push(tempB2);
-                    g.push((int)result);
+                double tempA = convert(g.pop(), g.pop());
+                double tempB = convert(g.pop(), g.pop());
+                String result = tempA-tempB+"";
+                if(result.charAt(0)=='-' && result.length()>=11) result = result.substring(0, 12);
+                else if(result.length()>=10) result = result.substring(0, 11);
+                else result = result.substring(0, result.length());
+                for(int i=0; i<result.length(); i++){
+                    if(result.charAt(i)=='.'){
+                        long temp = Long.parseLong(result.substring(0, i)+result.substring(i+1));
+                        if(temp > Integer.MAX_VALUE || temp < Integer.MIN_VALUE){
+                            System.out.println("Overflow during fixed point subtraction");
+                            return;
+                        }
+                        g.push(result.length()-(i+1));
+                        g.push((int)temp);
+                        break;
+                    }
                 }
 	}
+        private double convert(double base, int pow){
+            if(pow>=0) for(int i=0; i<pow; i++) base/=10;
+            else for(int i=0; i<pow*-1; i++) base*=10;
+            return Double.parseDouble(base+"");
+        }
 }

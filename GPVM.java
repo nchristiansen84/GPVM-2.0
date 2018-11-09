@@ -348,9 +348,14 @@ public class GPVM {
 	 * @param p int[] of executable object code
 	 * @param n stack size for programSpace.
 	 * @param d size for dspace
+	 * @param chk used to determine where to check; -3 = user must check
+	 *                                              -2 = top 2 on stack
+	 *                                              -1 = top of stack 
+	 *                                              0-x = position in dspace
+	 *                                              +0-x = position in dspace and position +1
 	 * @return The value on top of the stack.
 	 */
-	public String calculate(int[] p, int[] n, String[] d, long maxExecute){
+	public String calculate(int[] p, int[] n, String[] d, long maxExecute, String chk){
 		programSpace=p;
 		stack = n;
 		sp  = 0;
@@ -389,7 +394,10 @@ public class GPVM {
 			showDSpace();
 		}
 		
-		return (stack[sp])+"";
+		if(chk.equals("-3")) return "User must check";
+		else if(chk.equals("-2")) return stack[sp]+" and "+stack[sp+1];
+		else if(chk.equals("-1")) return stack[sp]+"";
+		else if(chk.charAt(0)=='+') return dspace[Integer.parseInt(chk)]+" and "+dspace[Integer.parseInt(chk)+1];
+		else return dspace[Integer.parseInt(chk)];
 	}
-
 }

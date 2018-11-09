@@ -25,23 +25,32 @@ public class DIVF extends AbstractOpCode {
          * Functor to execute the divide fixed point.
          */ 
 	public void opCode(GPVM g) {
-                String tempA1 = g.pop()+""; int tempA2 = g.pop();
-                String tempB1 = g.pop()+""; int tempB2 = g.pop();
-                double tempA = Double.parseDouble(tempA1.substring(0, tempA2)+"."+tempA1.substring(tempA2));
-                double tempB = Double.parseDouble(tempB1.substring(0, tempB2)+"."+tempB1.substring(tempB2));
-                double result = tempA/tempB;
-                String sResult = result+"";
-                if(result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) 
-                    System.out.println("Overflow during fixed point division");
-                else{
-                    for(int i=0; i<sResult.length(); i++){
-                        if(sResult.charAt(i)=='.'){
-                            if(i>=10) g.push(10);
-                            else g.push(i);
-                            g.push(Integer.parseInt(sResult.substring(0, i)+sResult.substring(i+1)));
-                            break;
+                double tempA = convert(g.pop(), g.pop());
+                double tempB = convert(g.pop(), g.pop());
+                if(tempB==0) {
+                    System.out.println("Cannot devide by 0");
+                    return;
+                }
+                String result = tempA/tempB+"";
+                if(result.charAt(0)=='-' && result.length()>=11) result = result.substring(0, 12);
+                else if(result.length()>=10) result = result.substring(0, 11);
+                else result = result.substring(0, result.length());
+                for(int i=0; i<result.length(); i++){
+                    if(result.charAt(i)=='.'){
+                        long temp = Long.parseLong(result.substring(0, i)+result.substring(i+1));
+                        if(temp > Integer.MAX_VALUE || temp < Integer.MIN_VALUE){
+                            System.out.println("Overflow during fixed point division");
+                            return;
                         }
+                        g.push(result.length()-(i+1));
+                        g.push((int)temp);
+                        break;
                     }
                 }
 	}
+        private double convert(double base, int pow){
+            if(pow>=0) for(int i=0; i<pow; i++) base/=10;
+            else for(int i=0; i<pow*-1; i++) base*=10;
+            return Double.parseDouble(base+"");
+        }
 }
